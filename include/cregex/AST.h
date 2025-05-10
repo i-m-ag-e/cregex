@@ -5,16 +5,17 @@
 #ifndef AST_H
 #define AST_H
 #include <stddef.h>
+#include <stdbool.h>
 
 enum NodeType {
-    Wildcard,
-    String,
-    Concat,
-    Alteration,
-    Star,
-    Plus,
-    Quest,
-    Group
+    WILDCARD,
+    STRING,
+    CONCAT,
+    ALTERNATION,
+    STAR,
+    PLUS,
+    QUEST,
+    GROUP
 };
 
 struct Node {
@@ -24,11 +25,26 @@ struct Node {
             char* str;
             size_t len;
         } string;
+
         struct {
             struct Node* left;
             struct Node* right;
-        } concat;
+        } compound;
+
+        struct {
+            struct Node* child;
+            bool greedy;
+        } unary;
+
+        struct {
+            struct Node* child;
+            int group_id;
+        } group;
     };
 };
+
+#ifndef NDEBUG
+void print_ast(const struct Node* node, int indent);
+#endif
 
 #endif //AST_H
