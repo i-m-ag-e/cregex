@@ -9,6 +9,7 @@
 
 enum NodeType {
     WILDCARD,
+    CHAR,
     STRING,
     CONCAT,
     ALTERNATION,
@@ -21,8 +22,10 @@ enum NodeType {
 struct Node {
     enum NodeType type;
     union {
+        char ch;
+
         struct {
-            char* str;
+            const char* str;
             size_t len;
         } string;
 
@@ -42,6 +45,9 @@ struct Node {
         } group;
     };
 };
+
+struct Node* new_node(enum NodeType type);
+void free_ast(const struct Node* node);
 
 #ifndef NDEBUG
 void print_ast(const struct Node* node, int indent);
