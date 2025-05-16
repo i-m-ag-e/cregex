@@ -8,7 +8,8 @@ add_library(cregex STATIC
         include/cregex/CRegex.h
         include/cregex/AST.h
         src/AST.c
-        include/cregex/Parser.h)
+        include/cregex/Parser.h
+        src/Parser.c)
 target_include_directories(cregex PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 add_executable(test test/main.c)
 target_link_libraries(test PUBLIC cregex)
